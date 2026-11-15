@@ -1,86 +1,122 @@
-# Azure Cloud Portfolio Project
+# Azure Cloud Project
 
-## Project Overview
+## 1. Project Overview
 
-The Azure Cloud Portfolio Project is a collaborative cloud deployment project designed to manage, test, and deploy multiple student portfolios through a central GitHub repository and a structured CI/CD workflow.
+The Azure Cloud Project is a collaborative cloud computing and deployment project that brings together application development, cloud infrastructure provisioning, containerization, CI/CD automation, DNS configuration and portfolio integration.
 
-The repository contains the main project and deployment code along with the individual portfolio applications contributed by the team members. Each portfolio is maintained separately within the repository while following a common source-control and deployment process.
+The project uses a centralized GitHub repository to manage source code, coordinate contributions from multiple teams and maintain project documentation.
 
-The project follows a structured GitHub workflow using feature branches, development, staging, and main branches. Feature branches are used for individual development, while the `dev` branch is used for ongoing integration. The `staging` branch acts as the release candidate and User Acceptance Testing (UAT) environment. After successful validation and approval, changes are promoted to the `main` branch, which serves as the approved source for production releases.
+## 2. Project Objectives
 
-Continuous Integration and automated validation are used to perform build, dependency, lint, and testing checks. The workflow also includes review and approval stages to maintain code quality and ensure that only validated changes progress toward production.
+- Develop and deploy applications using Microsoft Azure.
+- Provision and manage cloud infrastructure.
+- Configure DNS for application accessibility.
+- Containerize applications using Docker.
+- Implement CI/CD automation for application build and deployment.
+- Maintain a centralized repository for collaborative development.
+- Integrate individual student portfolios into a common repository.
 
-Microsoft Azure is used as the cloud platform for deploying the portfolio applications. The project demonstrates the integration of source control, collaborative development, CI/CD, automated testing, and cloud deployment into a single deployment workflow.
+## 3. Overall Project Components
 
-## Project Objectives
+### 3.1 DNS Configuration
 
-- Maintain the main project and multiple portfolio applications in a central repository.
-- Provide a structured GitHub-based source-control workflow.
-- Enable collaborative development through feature branches and pull requests.
-- Integrate automated build, dependency, lint, and testing checks.
-- Use staging for release candidate validation and UAT.
-- Promote only reviewed and approved changes toward production.
-- Deploy the approved applications to Microsoft Azure.
+This component covers DNS configuration and domain name resolution for accessing the deployed application.
 
-## Repository Structure
+**Implementation details:** To be documented using the DNS team's actual configuration.
 
-The repository contains:
+### 3.2 Virtual Machine Provisioning
 
-- **Main Project Code** – Core project and deployment-related code.
-- **Portfolio Applications** – Individual student portfolios maintained in separate folders.
-- **CI/CD Configuration** – Workflow and automation configuration required for validation and deployment.
-- **Documentation** – Project-related documentation and configuration details.
+This component covers the creation and configuration of virtual machines required for hosting or supporting project workloads.
 
-## Development Workflow
+**Implementation details:** To be documented using the infrastructure team's actual implementation.
 
-The project follows the workflow:
+### 3.3 Application Development
 
-`Feature Branch → Dev → Staging → Main → Production`
+This component covers the development and organization of the application's source code and related functionality.
 
-- **Feature Branch** – Individual student development.
-- **Dev** – Ongoing integration of approved changes.
-- **Staging** – Release candidate validation and UAT.
-- **Main** – Approved source for production releases.
-- **Production** – Deployment environment for the approved release.
+**Implementation details:** Refer to the application development team's codebase and documentation.
 
-## Technology
+### 3.4 Docker Containerization
 
+This component covers packaging the application and its dependencies into Docker images for consistent deployment.
+
+**Implementation details:** To be updated based on the containerization team's deliverables.
+
+### 3.5 CI/CD Pipeline
+
+This component covers the automation of build, validation, testing and deployment activities using the project's configured CI/CD workflows.
+
+**Implementation details:** Document the actual GitHub Actions workflows and deployment configuration available in the repository.
+
+### 3.6 GitHub Repository and Portfolio Management
+
+This component manages the centralized repository and integration of individual student portfolios.
+
+Activities include:
+- Centralized repository creation and configuration.
+- Individual branch-based contributions.
+- Pull Request submission and review.
+- Repository access and permission management.
+- Branch protection and approval rules.
+- Integration of approved portfolios into the main branch.
+
+## 4. Repository Structure
+
+The central repository contains:
+
+- Individual student portfolio folders.
+- Main project source code and related files, where integrated.
+- CI/CD workflow configurations.
+- Project-level documentation.
+- Infrastructure and deployment-related files, where integrated.
+
+## 5. GitHub Collaboration Workflow
+
+The portfolio contribution process follows:
+
+1. Clone the central repository.
+2. Create an individual feature branch.
+3. Add the portfolio in a separate folder.
+4. Commit the changes.
+5. Push the branch to GitHub.
+6. Create a Pull Request targeting main.
+7. Review and approve the submitted changes.
+8. Merge approved contributions into main.
+
+## 6. Technology Stack
+
+The project technology stack includes the tools and platforms used by the participating teams.
+
+- Microsoft Azure
 - Git
 - GitHub
-- CI/CD
-- Microsoft Azure
-- Automated Testing and Validation
+- Docker
+- CI/CD and GitHub Actions
+- DNS services
+- Virtual Machines
 
-## Team
+Additional technologies should be included based on the actual implementation.
 
-This project is collaboratively developed and maintained by the assigned project team members.
+## 7. Project Status
 
-<!-- BACKUP-SETUP -->
-## Local setup / restore
+The repository currently contains the individual portfolio submissions integrated into the main branch.
 
-This repository is a **backup copy** made before a machine reformat.
+The status of the application codebase, DNS configuration, virtual machine provisioning, Docker image creation and CI/CD integration should be updated based on the respective teams' verified deliverables.
 
-| | |
-|---|---|
-| Original location on disk | `C:\Users\Admin\Documents\Projects\azure-cloud-portfolio-project` |
-| Original remote | `https://github.com/kartikaa-natarajan/azure-cloud-portfolio-project.git` |
-| Backup remote (this repo) | `https://github.com/Devyansh-Gupta/azure-cloud-portfolio-project` |
+## 8. Future Scope
 
-### Prerequisites
+- Complete integration of all project components.
+- Connect application deployment with the containerization workflow.
+- Verify DNS-based application accessibility.
+- Integrate infrastructure provisioning and deployment automation.
+- Improve project-level documentation and deployment procedures.
 
-- Git
+## 9. Team Contributions
 
-### Setup
-No dependency manifest was detected in this folder. The files are archived as-is - open them directly, or see the notes below.
+This project involves multiple teams working on different components, including infrastructure, application development, containerization, automation and GitHub repository management.
 
-### What is *not* in this backup
+Each team's specific contribution should be documented according to its implemented deliverables.
 
-These are regenerable and were deliberately excluded (see `.gitignore`):
+## 10. Conclusion
 
-`node_modules/`  `.venv/`  `dist/`  `build/`  `target/`  `.next/`  `__pycache__/`  `.tools/`  `.pytest_cache/`
-
-Run the setup steps above to recreate them.
-
-### Notes
-
-- Originally pointed at `kartikaa-natarajan/azure-cloud-portfolio-project`; local branch `Devyansh-portfolio` is preserved.
+The centralized repository provides a common platform for collaborative development, source-code management and portfolio integration. It establishes an organized foundation for bringing together the different components of the Azure Cloud Project.
