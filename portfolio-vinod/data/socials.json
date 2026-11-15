@@ -1,0 +1,17 @@
+[
+  {
+    "icon": "ph-bold ph-linkedin-logo",
+    "link": "https://www.linkedin.com/in/vinod-chavan-4954aa25/",
+    "title": "LinkedIn"
+  },
+  {
+    "icon": "ph-bold ph-github-logo",
+    "link": "https://github.com/Zoro-57",
+    "title": "GitHub"
+  },
+  {
+    "icon": "ph-bold ph-envelope-simple",
+    "link": "mailto:vnchavan111@gmail.com",
+    "title": "Email"
+  }
+]
