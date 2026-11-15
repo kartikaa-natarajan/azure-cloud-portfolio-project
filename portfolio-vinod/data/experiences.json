@@ -1,0 +1,20 @@
+[
+  {
+    "date": "Present",
+    "title": "Software Engineer",
+    "agency": {
+      "name": "TUCKIT Lockers, Bengaluru, Karnataka",
+      "link": "#"
+    },
+    "description": "Contribute to software development and implementation for locker-based systems. Develop, test, debug, and maintain software components as part of the engineering workflow. Troubleshoot software and system-related issues to support reliable system operation. Collaborate with team members on software implementation, testing, and system improvements."
+  },
+  {
+    "date": "Internship",
+    "title": "SDE Intern",
+    "agency": {
+      "name": "TUCKIT Lockers, Bengaluru, Karnataka",
+      "link": "#"
+    },
+    "description": "Assisted the software engineering team with development and implementation activities. Supported testing and debugging of software components, gaining hands-on engineering experience. Worked with team members to troubleshoot and resolve software-related issues."
+  }
+]

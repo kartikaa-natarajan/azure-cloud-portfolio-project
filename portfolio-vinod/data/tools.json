@@ -1,0 +1,42 @@
+[
+  {
+    "category": "Programming Languages",
+    "skills": ["Python", "SQL", "PHP"],
+    "icon": "ph-bold ph-code"
+  },
+  {
+    "category": "Cloud Technologies",
+    "skills": ["AWS"],
+    "icon": "ph-bold ph-cloud"
+  },
+  {
+    "category": "Operating Systems",
+    "skills": ["Linux"],
+    "icon": "ph-bold ph-terminal-window"
+  },
+  {
+    "category": "Networking",
+    "skills": ["Computer Networking"],
+    "icon": "ph-bold ph-globe"
+  },
+  {
+    "category": "Core Concepts",
+    "skills": ["Data Structures and Algorithms"],
+    "icon": "ph-bold ph-tree-structure"
+  },
+  {
+    "category": "Web Technologies",
+    "skills": ["HTML", "CSS"],
+    "icon": "ph-bold ph-browsers"
+  },
+  {
+    "category": "Database",
+    "skills": ["MySQL"],
+    "icon": "ph-bold ph-database"
+  },
+  {
+    "category": "Other",
+    "skills": ["Software Development", "Debugging", "Testing", "Troubleshooting"],
+    "icon": "ph-bold ph-wrench"
+  }
+]

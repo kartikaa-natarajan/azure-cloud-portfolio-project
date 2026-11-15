@@ -1,0 +1,10 @@
+[
+  { "href": "#home", "caption": "Home", "icon": "ph-bold ph-house-simple" },
+  { "href": "#about", "caption": "About", "icon": "ph-bold ph-user" },
+  { "href": "#skills", "caption": "Skills", "icon": "ph-bold ph-cpu" },
+  { "href": "#education", "caption": "Education", "icon": "ph-bold ph-graduation-cap" },
+  { "href": "#experience", "caption": "Experience", "icon": "ph-bold ph-briefcase" },
+  { "href": "#portfolio", "caption": "Projects", "icon": "ph-bold ph-squares-four" },
+  { "href": "#certifications", "caption": "Certifications", "icon": "ph-bold ph-certificate" },
+  { "href": "#contact", "caption": "Contact", "icon": "ph-bold ph-envelope" }
+]

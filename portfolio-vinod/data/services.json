@@ -1,0 +1,26 @@
+[
+  {
+    "title": "Embedded Systems",
+    "tags": ["Embedded Software", "Locker Systems", "System Integration"],
+    "text": "Developing, implementing, and maintaining software components for locker-based systems and hardware-software interaction.",
+    "img": "/img/works/project1.png"
+  },
+  {
+    "title": "Cloud Computing & AWS",
+    "tags": ["AWS", "Cloud Architecture", "Linux"],
+    "text": "Hands-on experience with Amazon Web Services, cloud infrastructure deployment, Linux server environments, and database management.",
+    "img": "/img/works/project2.png"
+  },
+  {
+    "title": "Software Development & Testing",
+    "tags": ["Python", "SQL", "PHP", "HTML/CSS"],
+    "text": "Designing and building reliable software applications, writing clean code, and performing comprehensive software testing.",
+    "img": "/img/works/project3.png"
+  },
+  {
+    "title": "Debugging & Troubleshooting",
+    "tags": ["System Diagnostics", "Performance Optimization"],
+    "text": "Diagnosing complex system issues, resolving bugs efficiently, and ensuring smooth technical operations in production environments.",
+    "img": "/img/works/project1.png"
+  }
+]
