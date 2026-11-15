@@ -54,3 +54,33 @@ The project follows the workflow:
 ## Team
 
 This project is collaboratively developed and maintained by the assigned project team members.
+
+<!-- BACKUP-SETUP -->
+## Local setup / restore
+
+This repository is a **backup copy** made before a machine reformat.
+
+| | |
+|---|---|
+| Original location on disk | `C:\Users\Admin\Documents\Projects\azure-cloud-portfolio-project` |
+| Original remote | `https://github.com/kartikaa-natarajan/azure-cloud-portfolio-project.git` |
+| Backup remote (this repo) | `https://github.com/Devyansh-Gupta/azure-cloud-portfolio-project` |
+
+### Prerequisites
+
+- Git
+
+### Setup
+No dependency manifest was detected in this folder. The files are archived as-is - open them directly, or see the notes below.
+
+### What is *not* in this backup
+
+These are regenerable and were deliberately excluded (see `.gitignore`):
+
+`node_modules/`  `.venv/`  `dist/`  `build/`  `target/`  `.next/`  `__pycache__/`  `.tools/`  `.pytest_cache/`
+
+Run the setup steps above to recreate them.
+
+### Notes
+
+- Originally pointed at `kartikaa-natarajan/azure-cloud-portfolio-project`; local branch `Devyansh-portfolio` is preserved.
