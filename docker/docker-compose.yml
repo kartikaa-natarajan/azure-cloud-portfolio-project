@@ -1,0 +1,262 @@
+# All student portfolios behind one nginx reverse proxy.
+#   docker compose -f docker/docker-compose.yml up -d --build
+# Each portfolio is reachable at http://<name>.<host>:<port>/ (see docker/README.md).
+name: portfolios
+
+x-site: &site
+  restart: unless-stopped
+  networks: [portfolios]
+
+services:
+  proxy:
+    build: ./proxy
+    image: portfolio/proxy
+    restart: unless-stopped
+    networks: [portfolios]
+    ports:
+      - "${PORTFOLIO_HTTP_PORT:-8080}:80"
+    depends_on:
+      - p-abel-shon
+      - p-abhishek-kumar
+      - p-adithya-tej-bm
+      - p-adrish-chowdhury
+      - p-anshumaankhare
+      - p-anusha
+      - p-devyansh
+      - p-dhruvi-bagga
+      - p-gayathri
+      - p-govind-madhav
+      - p-hemanth-raj
+      - p-jeeva
+      - p-kalyani
+      - p-kartikaa
+      - p-manish-yadav
+      - p-megha
+      - p-prajwal
+      - p-prem
+      - p-rohit
+      - p-rubika
+      - p-shivam
+      - p-simran
+      - p-smrithi
+      - p-utkarsh
+      - p-vinod
+
+  p-abel-shon:
+    <<: *site
+    build:
+      context: ..
+      dockerfile: docker/images/abel-shon.Dockerfile
+    image: portfolio/abel-shon
+
+  p-abhishek-kumar:
+    <<: *site
+    build:
+      context: ..
+      dockerfile: docker/images/abhishek-kumar.Dockerfile
+    image: portfolio/abhishek-kumar
+
+  p-adithya-tej-bm:
+    <<: *site
+    build:
+      context: ..
+      dockerfile: docker/images/adithya-tej-bm.Dockerfile
+    image: portfolio/adithya-tej-bm
+
+  p-adrish-chowdhury:
+    <<: *site
+    build:
+      context: ..
+      dockerfile: docker/images/adrish-chowdhury.Dockerfile
+    image: portfolio/adrish-chowdhury
+
+  p-anshumaankhare:
+    <<: *site
+    build:
+      context: ..
+      dockerfile: docker/images/anshumaankhare.Dockerfile
+    image: portfolio/anshumaankhare
+
+  p-anusha:
+    <<: *site
+    build:
+      context: ..
+      dockerfile: docker/images/anusha.Dockerfile
+    image: portfolio/anusha
+
+  p-devyansh:
+    <<: *site
+    build:
+      context: ..
+      dockerfile: docker/images/devyansh.Dockerfile
+    image: portfolio/devyansh
+
+  p-dhruvi-bagga:
+    <<: *site
+    build:
+      context: ..
+      dockerfile: docker/images/dhruvi-bagga.Dockerfile
+    image: portfolio/dhruvi-bagga
+
+  p-gayathri:
+    <<: *site
+    build:
+      context: ..
+      dockerfile: docker/images/gayathri.Dockerfile
+    image: portfolio/gayathri
+
+  p-govind-madhav:
+    <<: *site
+    build:
+      context: ..
+      dockerfile: docker/images/govind-madhav.Dockerfile
+      target: runner
+    image: portfolio/govind-madhav
+    environment:
+      DATABASE_URL: postgresql://portfolio:portfolio@p-govind-madhav-db:5432/portfolio
+      AUTH_SECRET: ${GOVIND_AUTH_SECRET:-change-me-local-only-secret-0123456789}
+      AUTH_TRUST_HOST: "true"
+    depends_on:
+      p-govind-madhav-migrate:
+        condition: service_completed_successfully
+
+  p-govind-madhav-migrate:
+    build:
+      context: ..
+      dockerfile: docker/images/govind-madhav.Dockerfile
+      target: migrate
+    image: portfolio/govind-madhav-migrate
+    restart: "no"
+    networks: [portfolios]
+    environment:
+      DATABASE_URL: postgresql://portfolio:portfolio@p-govind-madhav-db:5432/portfolio
+    depends_on:
+      p-govind-madhav-db:
+        condition: service_healthy
+
+  p-govind-madhav-db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    networks: [portfolios]
+    environment:
+      POSTGRES_USER: portfolio
+      POSTGRES_PASSWORD: portfolio
+      POSTGRES_DB: portfolio
+    volumes:
+      - govind-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U portfolio -d portfolio"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  p-hemanth-raj:
+    <<: *site
+    build:
+      context: ..
+      dockerfile: docker/images/hemanth-raj.Dockerfile
+    image: portfolio/hemanth-raj
+
+  p-jeeva:
+    <<: *site
+    build:
+      context: ..
+      dockerfile: docker/images/jeeva.Dockerfile
+    image: portfolio/jeeva
+
+  p-kalyani:
+    <<: *site
+    build:
+      context: ..
+      dockerfile: docker/images/kalyani.Dockerfile
+    image: portfolio/kalyani
+
+  p-kartikaa:
+    <<: *site
+    build:
+      context: ..
+      dockerfile: docker/images/kartikaa.Dockerfile
+    image: portfolio/kartikaa
+
+  p-manish-yadav:
+    <<: *site
+    build:
+      context: ..
+      dockerfile: docker/images/manish-yadav.Dockerfile
+    image: portfolio/manish-yadav
+
+  p-megha:
+    <<: *site
+    build:
+      context: ..
+      dockerfile: docker/images/megha.Dockerfile
+    image: portfolio/megha
+
+  p-prajwal:
+    <<: *site
+    build:
+      context: ..
+      dockerfile: docker/images/prajwal.Dockerfile
+    image: portfolio/prajwal
+
+  p-prem:
+    <<: *site
+    build:
+      context: ..
+      dockerfile: docker/images/prem.Dockerfile
+    image: portfolio/prem
+
+  p-rohit:
+    <<: *site
+    build:
+      context: ..
+      dockerfile: docker/images/rohit.Dockerfile
+    image: portfolio/rohit
+
+  p-rubika:
+    <<: *site
+    build:
+      context: ..
+      dockerfile: docker/images/rubika.Dockerfile
+    image: portfolio/rubika
+
+  p-shivam:
+    <<: *site
+    build:
+      context: ..
+      dockerfile: docker/images/shivam.Dockerfile
+    image: portfolio/shivam
+
+  p-simran:
+    <<: *site
+    build:
+      context: ..
+      dockerfile: docker/images/simran.Dockerfile
+    image: portfolio/simran
+
+  p-smrithi:
+    <<: *site
+    build:
+      context: ..
+      dockerfile: docker/images/smrithi.Dockerfile
+    image: portfolio/smrithi
+
+  p-utkarsh:
+    <<: *site
+    build:
+      context: ..
+      dockerfile: docker/images/utkarsh.Dockerfile
+    image: portfolio/utkarsh
+
+  p-vinod:
+    <<: *site
+    build:
+      context: ..
+      dockerfile: docker/images/vinod.Dockerfile
+    image: portfolio/vinod
+
+networks:
+  portfolios:
+
+volumes:
+  govind-db:

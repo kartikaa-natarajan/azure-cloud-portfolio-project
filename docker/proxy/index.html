@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Student Portfolios</title>
+<style>
+  :root{color-scheme:light dark;--bg:#0f1117;--card:#181b24;--line:#2a2f3d;--fg:#e8eaf0;--mut:#9aa1b2;--acc:#6ea8ff}
+  @media (prefers-color-scheme:light){:root{--bg:#f6f7fb;--card:#fff;--line:#dfe3ee;--fg:#14171f;--mut:#5b6377;--acc:#2456d6}}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+  main{max-width:1080px;margin:0 auto;padding:48px 20px 64px}
+  h1{margin:0 0 6px;font-size:clamp(1.6rem,4vw,2.3rem)}
+  p.sub{margin:0 0 24px;color:var(--mut)}
+  input{width:100%;max-width:420px;padding:11px 14px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--fg);font:inherit}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin-top:22px}
+  a.card{display:block;padding:16px 18px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:inherit;text-decoration:none;transition:border-color .15s,transform .15s}
+  a.card:hover,a.card:focus-visible{border-color:var(--acc);transform:translateY(-2px);outline:none}
+  .n{font-weight:600}.u{color:var(--mut);font-size:.82rem;word-break:break-all;margin-top:2px}
+  .empty{color:var(--mut);margin-top:22px;display:none}
+</style>
+</head>
+<body>
+<main>
+  <h1>Student Portfolios</h1>
+  <p class="sub"><span id="count"></span> portfolios, each on its own address. Pick one to open it.</p>
+  <input id="q" type="search" placeholder="Search by name" autocomplete="off" autofocus>
+  <div class="grid" id="grid"></div>
+  <p class="empty" id="empty">No match.</p>
+</main>
+<script>
+const SITES = [["abel-shon", "Abel Shon"], ["abhishek-kumar", "Abhishek Kumar"], ["adithya-tej-bm", "Adithya Tej BM"], ["adrish-chowdhury", "Adrish Chowdhury"], ["anshumaankhare", "Anshumaan Khare"], ["anusha", "Anusha"], ["devyansh", "Devyansh"], ["dhruvi-bagga", "Dhruvi Bagga"], ["gayathri", "Gayathri"], ["govind-madhav", "Govind Madhav"], ["hemanth-raj", "Hemanth Raj"], ["jeeva", "Jeeva"], ["kalyani", "Kalyani"], ["kartikaa", "Kartikaa"], ["manish-yadav", "Manish Yadav"], ["megha", "Megha"], ["prajwal", "Prajwal"], ["prem", "Prem"], ["rohit", "Rohit"], ["rubika", "Rubika"], ["shivam", "Shivam"], ["simran", "Simran"], ["smrithi", "Smrithi"], ["utkarsh", "Utkarsh"], ["vinod", "Vinod"]];
+// Subdomain base: bare IPs use nip.io so <name>.<ip>.nip.io resolves back to the same VM.
+const host = location.hostname, port = location.port ? ':' + location.port : '';
+const base = /^\d+\.\d+\.\d+\.\d+$/.test(host) ? host + '.nip.io' : host;
+const urlFor = s => location.protocol + '//' + s + '.' + base + port + '/';
+const grid = document.getElementById('grid');
+grid.innerHTML = SITES.map(([s, n]) => `<a class="card" data-n="${n.toLowerCase()} ${s}" href="${urlFor(s)}"><div class="n">${n}</div><div class="u">${urlFor(s).replace(/^https?:\/\//,'')}</div></a>`).join('');
+document.getElementById('count').textContent = SITES.length;
+const q = document.getElementById('q'), empty = document.getElementById('empty');
+q.addEventListener('input', () => {
+  const v = q.value.trim().toLowerCase(); let shown = 0;
+  grid.querySelectorAll('a').forEach(a => { const ok = !v || a.dataset.n.includes(v); a.style.display = ok ? '' : 'none'; shown += ok; });
+  empty.style.display = shown ? 'none' : 'block';
+});
+</script>
+</body>
+</html>
