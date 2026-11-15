@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    color-scheme: light;
+  }
+  
+  body {
+    @apply bg-[#faf8ff] text-slate-800 font-sans antialiased selection:bg-lavender-200 selection:text-lavender-900 min-h-screen;
+    overflow-x: hidden;
+  }
+
+  /* Custom subtle lavender scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #faf8ff;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #d5bbfd;
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #bc92f9;
+  }
+}
+
+@layer utilities {
+  .bg-grid-pattern {
+    background-size: 32px 32px;
+    background-image: 
+      linear-gradient(to right, rgba(131, 56, 236, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(131, 56, 236, 0.05) 1px, transparent 1px);
+  }
+}
