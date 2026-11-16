@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-# Portfolio_SaiSiddartha.
-=======
-# Azure Cloud Project
-
 ## 1. Project Overview
 
 The Azure Cloud Project is a collaborative cloud computing and deployment project that brings together application development, cloud infrastructure provisioning, containerization, CI/CD automation, DNS configuration and portfolio integration.
