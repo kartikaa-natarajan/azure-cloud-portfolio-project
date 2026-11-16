@@ -1,5 +1,6 @@
 /**
  * Anshumaan Khare Portfolio - Interactive Scripting & Animations
+ * Pure Vanilla JavaScript (Zero build tools required)
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -23,9 +24,11 @@ document.addEventListener('DOMContentLoaded', () => {
    ========================================================================== */
 function initParticleCanvas() {
   const canvas = document.getElementById('particle-canvas');
-  if (!canvas) return;
+  if (!canvas || !canvas.parentElement) return;
 
   const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+
   let width, height;
   let particles = [];
   const particleCount = window.innerWidth < 768 ? 35 : 70;
@@ -180,6 +183,15 @@ function initCounters() {
   const counterElements = document.querySelectorAll('.counter-val');
   if (!counterElements.length) return;
 
+  if (!('IntersectionObserver' in window)) {
+    counterElements.forEach(el => {
+      const target = el.getAttribute('data-target') || '0';
+      const suffix = el.getAttribute('data-suffix') || '';
+      el.textContent = target + suffix;
+    });
+    return;
+  }
+
   const observer = new IntersectionObserver((entries, obs) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -305,7 +317,19 @@ function initThemeToggle() {
   const themeIcon = document.getElementById('theme-icon');
   if (!toggleBtn) return;
 
-  const currentTheme = localStorage.getItem('theme') || 'dark';
+  function safeGetTheme() {
+    try {
+      return localStorage.getItem('theme') || 'dark';
+    } catch (e) {
+      return 'dark';
+    }
+  }
+
+  function safeSetTheme(theme) {
+    try {
+      localStorage.setItem('theme', theme);
+    } catch (e) {}
+  }
 
   function applyTheme(theme) {
     if (theme === 'light') {
@@ -319,13 +343,13 @@ function initThemeToggle() {
     }
   }
 
-  applyTheme(currentTheme);
+  applyTheme(safeGetTheme());
 
   toggleBtn.addEventListener('click', () => {
     const isLight = document.documentElement.classList.contains('light');
     const newTheme = isLight ? 'dark' : 'light';
     applyTheme(newTheme);
-    localStorage.setItem('theme', newTheme);
+    safeSetTheme(newTheme);
     showToast(`Switched to ${newTheme} mode!`, 'info');
   });
 }
@@ -478,7 +502,7 @@ function initContactForm() {
       return;
     }
 
-    // Simulate sending with nice button spinner
+    // Simulate sending with button spinner
     const originalText = submitBtn.innerHTML;
     submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Sending Message...';
     submitBtn.disabled = true;
@@ -493,8 +517,33 @@ function initContactForm() {
 }
 
 /* ==========================================================================
-   12. Copy to Clipboard Utility
+   12. Copy to Clipboard Utility (with robust fallback)
    ========================================================================== */
+function copyToClipboard(text) {
+  if (navigator.clipboard && window.isSecureContext) {
+    return navigator.clipboard.writeText(text);
+  }
+  return new Promise((resolve, reject) => {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.position = 'fixed';
+    textarea.style.left = '-999999px';
+    textarea.style.top = '-999999px';
+    document.body.appendChild(textarea);
+    textarea.focus();
+    textarea.select();
+    try {
+      const successful = document.execCommand('copy');
+      document.body.removeChild(textarea);
+      if (successful) resolve();
+      else reject(new Error('Copy command failed'));
+    } catch (err) {
+      document.body.removeChild(textarea);
+      reject(err);
+    }
+  });
+}
+
 function initClipboardButtons() {
   const copyButtons = document.querySelectorAll('[data-copy]');
   copyButtons.forEach(btn => {
@@ -503,7 +552,7 @@ function initClipboardButtons() {
       const text = btn.getAttribute('data-copy');
       if (!text) return;
 
-      navigator.clipboard.writeText(text).then(() => {
+      copyToClipboard(text).then(() => {
         showToast(`Copied to clipboard: ${text}`, 'success');
       }).catch(() => {
         showToast('Unable to copy. Please copy manually.', 'error');
@@ -590,4 +639,3 @@ function initScrollSpy() {
     });
   });
 }
-
