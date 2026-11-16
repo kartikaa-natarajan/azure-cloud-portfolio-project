@@ -1,11 +1,11 @@
-# Stage 1: Build the Vite + React application
+﻿# Stage 1: Build the Vite + React application
 FROM node:20-alpine AS build
 
 WORKDIR /app
 
 # Install dependencies
 COPY package*.json ./
-RUN npm ci
+RUN npm ci --legacy-peer-deps || npm install --legacy-peer-deps
 
 # Copy source and build
 COPY . .
@@ -22,3 +22,4 @@ EXPOSE 80
 
 # Start Nginx in foreground
 CMD ["nginx", "-g", "daemon off;"]
+

@@ -1,11 +1,11 @@
-# Stage 1: Build the Vite application
+﻿# Stage 1: Build the Vite application
 FROM node:20-alpine AS build
 
 WORKDIR /app
 
 # Install dependencies
 COPY package*.json ./
-RUN npm ci
+RUN npm ci --legacy-peer-deps || npm install --legacy-peer-deps
 
 # Copy source and build
 COPY . .
@@ -16,3 +16,4 @@ FROM nginx:alpine
 COPY --from=build /app/dist /usr/share/nginx/html
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
+

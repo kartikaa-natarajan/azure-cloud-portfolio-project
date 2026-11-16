@@ -1,4 +1,4 @@
-# Stage 1: Build client
+﻿# Stage 1: Build client
 FROM node:20-alpine AS build
 
 WORKDIR /app
@@ -6,7 +6,7 @@ WORKDIR /app
 COPY package*.json ./
 COPY client/package*.json ./client/
 COPY server/package*.json ./server/
-RUN npm ci
+RUN npm ci --legacy-peer-deps || npm install --legacy-peer-deps
 
 COPY client/ ./client/
 RUN npm run build --workspace client
@@ -16,3 +16,4 @@ FROM nginx:alpine
 COPY --from=build /app/client/dist /usr/share/nginx/html
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
+
