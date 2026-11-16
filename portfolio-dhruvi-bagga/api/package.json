@@ -1,0 +1,13 @@
+{
+  "name": "portfolio-api",
+  "version": "1.0.0",
+  "description": "Portfolio API for Azure Static Web Apps",
+  "main": "index.js",
+  "scripts": {
+    "start": "func start"
+  },
+  "dependencies": {
+    "@azure/functions": "^4.8.0",
+    "mongoose": "^9.9.4"
+  }
+}

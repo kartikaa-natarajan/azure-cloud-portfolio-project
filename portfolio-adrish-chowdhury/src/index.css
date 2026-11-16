@@ -1,0 +1,87 @@
+@import "tailwindcss";
+@theme {
+  --color-bg:#08070D; --color-bg2:#100D1A; --color-card:#171421;
+  --color-ink:#F7F5FA; --color-ink2:#A6A1B2; --color-ink3:#8A8497;
+  --color-red:#E50932; --color-purple:#24162F; --color-line:#2B2635;
+  --font-title:"Barlow Condensed","Arial Narrow",sans-serif;
+  --font-display:"Anton","Bebas Neue",Impact,sans-serif;
+  --font-body:"Inter",system-ui,sans-serif;
+}
+html{scroll-behavior:smooth;scroll-padding-top:64px;max-width:100%}
+body{background:var(--color-bg);color:var(--color-ink);font-family:var(--font-body);-webkit-font-smoothing:antialiased}
+.display{font-family:var(--font-display);text-transform:uppercase;letter-spacing:.01em;line-height:.95}
+.meta{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--color-ink3)}
+:focus-visible{outline:2px solid var(--color-red);outline-offset:3px}
+.noscroll{scrollbar-width:none}.noscroll::-webkit-scrollbar{display:none}
+@media (prefers-reduced-motion:reduce){html:not([data-motion=full]){scroll-behavior:auto}html:not([data-motion=full]) *{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+@keyframes drift{0%,100%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(2%,-2%,0) scale(1.08)}}
+.drift{animation:drift 18s ease-in-out infinite}
+@keyframes glow{0%,100%{box-shadow:0 0 18px #e5093266}50%{box-shadow:0 0 34px #e50932aa}}
+.glow{animation:glow 3s ease-in-out infinite}
+
+/* ---- Mobile / iOS ---- */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
+body{min-height:100vh;min-height:100dvh;overscroll-behavior-y:none}
+/* iOS Safari zooms the page when a focused field is under 16px */
+input,textarea,select{font-size:16px!important}
+button,a{touch-action:manipulation}
+.safe-t{padding-top:env(safe-area-inset-top)}
+.safe-b{padding-bottom:max(1.5rem,env(safe-area-inset-bottom))}
+.safe-x{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}
+.rail{-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+
+/* ---- React Bits-style effects ---- */
+@keyframes shine{0%{background-position:150% 0}100%{background-position:-50% 0}}
+.shiny{--b:var(--shiny-base,#a6a1b2);background:linear-gradient(110deg,var(--b) 40%,#fff 50%,var(--b) 60%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;animation:shine 3.5s linear infinite}
+@keyframes aurora{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(10%,12%) scale(1.15)}66%{transform:translate(-8%,6%) scale(.9)}}
+.aurora-blob{position:absolute;width:45vw;height:45vw;max-width:700px;max-height:700px;border-radius:9999px;filter:blur(90px);opacity:.28;animation:aurora 22s ease-in-out infinite;will-change:transform}
+@media (max-width:640px){.aurora-blob{filter:blur(60px)}}
+@keyframes marquee{to{transform:translateX(-50%)}}
+.marquee-track{animation:marquee linear infinite;will-change:transform}
+.marquee:hover .marquee-track{animation-play-state:paused}
+@media (prefers-reduced-motion:reduce){html:not([data-motion=full]) :is(.marquee-track,.aurora-blob,.drift,.shiny,.glow){animation:none!important}html:not([data-motion=full]) .shiny{-webkit-text-fill-color:var(--shiny-base,#a6a1b2)}}
+
+/* ---- Futuristic HUD layer ---- */
+@theme { --color-cyan:#22d3ee; --font-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace; }
+.hero-h{min-height:100vh;min-height:100svh}
+.hud{position:relative}
+.hud::before,.hud::after{content:"";position:absolute;width:12px;height:12px;pointer-events:none;z-index:3;border:1px solid rgba(34,211,238,.5);transition:width .3s,height .3s,border-color .3s}
+.hud::before{top:0;left:0;border-right:0;border-bottom:0}
+.hud::after{bottom:0;right:0;border-left:0;border-top:0}
+.hud:hover::before,.hud:hover::after{width:22px;height:22px;border-color:#22d3ee}
+.grid-floor{position:absolute;left:0;right:0;bottom:0;height:50%;overflow:hidden;pointer-events:none;-webkit-mask-image:linear-gradient(to top,#000 5%,transparent 80%);mask-image:linear-gradient(to top,#000 5%,transparent 80%)}
+.grid-floor::before{content:"";position:absolute;left:-50%;right:-50%;bottom:-10%;height:200%;background-image:linear-gradient(rgba(34,211,238,.3) 1px,transparent 1px),linear-gradient(90deg,rgba(34,211,238,.3) 1px,transparent 1px);background-size:64px 64px;transform:perspective(500px) rotateX(62deg);transform-origin:50% 100%;animation:floor 6s linear infinite}
+@keyframes floor{to{transform:perspective(500px) rotateX(62deg) translateY(64px)}}
+.scan{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.scan::after{content:"";position:absolute;left:0;right:0;top:-20%;height:20%;background:linear-gradient(to bottom,transparent,rgba(34,211,238,.07),transparent);animation:scan 9s linear infinite}
+@keyframes scan{to{transform:translateY(600%)}}
+.beam{position:relative;display:inline-block;isolation:isolate;overflow:hidden;border-radius:4px;padding:1px}
+.beam::before{content:"";position:absolute;inset:-150%;z-index:-1;background:conic-gradient(from 0deg,transparent 0 68%,#22d3ee 85%,#e50932 95%,transparent 100%);animation:bspin 3.2s linear infinite}
+@keyframes bspin{to{transform:rotate(360deg)}}
+/* phones: static grid, no scan, calmer */
+@media (hover:none),(max-width:767px){.grid-floor::before{animation:none}.grid-floor{opacity:.5}}
+@media (prefers-reduced-motion:reduce){html:not([data-motion=full]) :is(.grid-floor,.scan,.beam)::before,html:not([data-motion=full]) .scan::after{animation:none!important}}
+
+/* ---- Smooth-scroll hardening ---- */
+html,body{overflow-x:hidden}
+@supports (overflow:clip){html,body{overflow-x:clip}}
+/* Touch devices: remove the costly GPU effects (backdrop blur, glow animation, spinning border, masks) */
+@media (hover:none),(max-width:767px){
+  [class*="backdrop-blur"]{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+  .glow{animation:none!important;box-shadow:0 0 22px #e5093266}
+  .beam::before{animation:none!important;background:linear-gradient(120deg,#22d3ee,#e50932)}
+  .marquee-track{animation-duration:60s!important}
+  .hud::before,.hud::after{display:none}
+  img{content-visibility:auto}
+}
+
+/* Netflix "Top 5" outlined numerals */
+.rank{color:transparent;-webkit-text-stroke:2px rgba(255,255,255,.7);text-shadow:0 4px 24px rgba(0,0,0,.6);letter-spacing:0}
+@media (hover:none),(max-width:767px){.rank{-webkit-text-stroke:1.5px rgba(255,255,255,.75)}}
+
+/* Card / sub-heading titles: open, readable letterforms (Anton is reserved for the big headings) */
+.title{font-family:var(--font-title);font-weight:700;text-transform:uppercase;letter-spacing:.035em;line-height:1.08}
+
+/* Footer: room for the phone dock + home indicator; normal padding on desktop */
+.footer-pad{padding-bottom:max(1.5rem,env(safe-area-inset-bottom))}
+@media (max-width:767px){.footer-pad{padding-bottom:calc(5.5rem + env(safe-area-inset-bottom))}}

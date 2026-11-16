@@ -1,0 +1,129 @@
+name: Multi-Portfolio Docker CI/CD
+
+on:
+  push:
+    branches: [ main, docker-setup ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      target_portfolio:
+        description: 'Specific portfolio to build (or "all")'
+        required: true
+        default: 'all'
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  detect-portfolios:
+    name: Detect Portfolios to Build
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+      has_portfolios: ${{ steps.set-matrix.outputs.has_portfolios }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Determine changed portfolios
+        id: set-matrix
+        run: |
+          TARGET="${{ github.event.inputs.target_portfolio }}"
+
+          # Case 1: Manual trigger with specific portfolio name
+          if [ -n "$TARGET" ] && [ "$TARGET" != "all" ]; then
+            if [ -f "$TARGET/Dockerfile" ]; then
+              echo "matrix=[\"$TARGET\"]" >> $GITHUB_OUTPUT
+              echo "has_portfolios=true" >> $GITHUB_OUTPUT
+              exit 0
+            else
+              echo "Error: $TARGET does not exist or has no Dockerfile"
+              exit 1
+            fi
+          fi
+
+          # Case 2: Manual trigger for all portfolios
+          if [ "$TARGET" = "all" ]; then
+            DIRS=$(find . -maxdepth 2 -name "Dockerfile" -not -path "*/.*/*" | sed 's|^\./||' | cut -d'/' -f1 | sort -u | jq -R -s -c 'split("\n")[:-1]')
+            echo "matrix=$DIRS" >> $GITHUB_OUTPUT
+            echo "has_portfolios=true" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          # Case 3: Pull Request - compare against base branch
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BASE_REF="origin/${{ github.base_ref }}"
+            CHANGED=$(git diff --name-only "$BASE_REF"...HEAD | cut -d/ -f1 | sort -u)
+          else
+            # Case 4: Push - compare against previous commit
+            if [ "${{ github.event.before }}" = "0000000000000000000000000000000000000000" ] || [ -z "${{ github.event.before }}" ]; then
+              CHANGED=$(git diff --name-only HEAD~1 HEAD 2>/dev/null || find . -maxdepth 2 -name "Dockerfile" -not -path "*/.*/*" | sed 's|^\./||' | cut -d'/' -f1 | sort -u)
+            else
+              CHANGED=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | cut -d/ -f1 | sort -u)
+            fi
+          fi
+
+          VALID_DIRS=()
+          for dir in $CHANGED; do
+            if [ -f "$dir/Dockerfile" ]; then
+              VALID_DIRS+=("$dir")
+            fi
+          done
+
+          if [ ${#VALID_DIRS[@]} -eq 0 ]; then
+            echo "No portfolio changes with Dockerfiles detected."
+            echo "matrix=[]" >> $GITHUB_OUTPUT
+            echo "has_portfolios=false" >> $GITHUB_OUTPUT
+          else
+            JSON=$(printf '%s\n' "${VALID_DIRS[@]}" | jq -R . | jq -s -c .)
+            echo "Detected portfolios: $JSON"
+            echo "matrix=$JSON" >> $GITHUB_OUTPUT
+            echo "has_portfolios=true" >> $GITHUB_OUTPUT
+          fi
+
+  build-and-push:
+    name: Build & Push
+    needs: detect-portfolios
+    if: needs.detect-portfolios.outputs.has_portfolios == 'true'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        portfolio: ${{ fromJson(needs.detect-portfolios.outputs.matrix) }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GitHub Container Registry
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Sanitize image name
+        id: image-name
+        run: |
+          REPO_OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          PORTFOLIO=$(echo "${{ matrix.portfolio }}" | tr '[:upper:]' '[:lower:]')
+          echo "image_name=ghcr.io/$REPO_OWNER/$PORTFOLIO" >> $GITHUB_OUTPUT
+
+      - name: Build (and Push if main)
+        uses: docker/build-push-action@v5
+        with:
+          context: ./${{ matrix.portfolio }}
+          file: ./${{ matrix.portfolio }}/Dockerfile
+          push: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+          tags: |
+            ${{ steps.image-name.outputs.image_name }}:latest
+            ${{ steps.image-name.outputs.image_name }}:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

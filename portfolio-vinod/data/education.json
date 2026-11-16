@@ -1,0 +1,22 @@
+[
+  {
+    "date": "Apr 2025 – Present",
+    "title": "Master of Computer Applications (MCA)",
+    "specialization": "Storage and Cloud Technology",
+    "source": {
+      "name": "Jain (Deemed-to-be University), Bengaluru",
+      "link": "#"
+    },
+    "description": "Currently pursuing MCA with specialization in Storage and Cloud Technology. Coursework and practical training in Cloud Computing, AWS, Distributed Systems, Software Engineering, and Enterprise Applications."
+  },
+  {
+    "date": "Apr 2021 – Jun 2024",
+    "title": "Bachelor of Computer Applications (BCA)",
+    "specialization": "Computer Applications",
+    "source": {
+      "name": "KLE Society's Shri Mrutyunjay Arts, Commerce and BCA College, Dharwad",
+      "link": "#"
+    },
+    "description": "Foundational education in Computer Science, Data Structures & Algorithms, Database Management Systems, Object-Oriented Programming, and Web Development."
+  }
+]

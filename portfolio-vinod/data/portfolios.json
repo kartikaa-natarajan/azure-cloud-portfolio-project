@@ -1,0 +1,68 @@
+[
+  {
+    "href": "/img/works/project1.png",
+    "dataImage": "/img/works/project1.png",
+    "src": "/img/works/project1.png",
+    "alt": "Tiny Treasure – Online Gift Shop Management System",
+    "figcaptionClass": "gallery__descr",
+    "title": "Tiny Treasure – Online Gift Shop Management System",
+    "titleClass": "",
+    "tags": [
+      { "text": "PHP", "className": "rounded-tag" },
+      { "text": "MySQL", "className": "rounded-tag" },
+      { "text": "HTML", "className": "rounded-tag" },
+      { "text": "CSS", "className": "rounded-tag" }
+    ],
+    "description": "Developed a PHP and MySQL-based e-commerce application for online gift shop management. Implemented CRUD operations and shopping cart functionality for the purchasing workflow, along with a responsive user-friendly interface using HTML and CSS.",
+    "features": [
+      "Developed a PHP and MySQL-based e-commerce application for online gift shop management.",
+      "Implemented CRUD operations and shopping cart functionality for the purchasing workflow.",
+      "Designed a responsive, user-friendly interface using HTML and CSS."
+    ],
+    "width": 1400,
+    "height": 900
+  },
+  {
+    "href": "/img/works/project2.png",
+    "dataImage": "/img/works/project2.png",
+    "src": "/img/works/project2.png",
+    "alt": "Interview Preparation System",
+    "figcaptionClass": "gallery__descr",
+    "title": "Interview Preparation System",
+    "titleClass": "",
+    "tags": [
+      { "text": "Python", "className": "rounded-tag" },
+      { "text": "HTML", "className": "rounded-tag" },
+      { "text": "CSS", "className": "rounded-tag" }
+    ],
+    "description": "Built a web application with interview questions, quizzes, and score-tracking functionality. Implemented performance evaluation based on quiz results for an interactive prep experience.",
+    "features": [
+      "Built a web application with interview questions, quizzes, and score-tracking functionality.",
+      "Implemented performance evaluation based on quiz results for an interactive prep experience."
+    ],
+    "width": 1400,
+    "height": 900
+  },
+  {
+    "href": "/img/works/project3.png",
+    "dataImage": "/img/works/project3.png",
+    "src": "/img/works/project3.png",
+    "alt": "Smart Resume Analyzer",
+    "figcaptionClass": "gallery__descr",
+    "title": "Smart Resume Analyzer",
+    "titleClass": "",
+    "tags": [
+      { "text": "Python", "className": "rounded-tag" },
+      { "text": "Basic NLP", "className": "rounded-tag" },
+      { "text": "HTML", "className": "rounded-tag" },
+      { "text": "CSS", "className": "rounded-tag" }
+    ],
+    "description": "Built a resume analysis tool using keyword matching and basic NLP to evaluate resume content. Designed a simple web interface for interacting with the analysis tool.",
+    "features": [
+      "Built a resume analysis tool using keyword matching and basic NLP to evaluate resume content.",
+      "Designed a simple web interface for interacting with the analysis tool."
+    ],
+    "width": 1400,
+    "height": 900
+  }
+]
