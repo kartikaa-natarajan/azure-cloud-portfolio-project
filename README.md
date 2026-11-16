@@ -1,3 +1,6 @@
+<<<<<<< HEAD
+# Portfolio_SaiSiddartha.
+=======
 # Azure Cloud Project
 
 ## 1. Project Overview
@@ -129,3 +132,4 @@ Each team's specific contribution should be documented according to its implemen
 ## 10. Conclusion
 
 The centralized repository provides a common platform for collaborative development, source-code management and portfolio integration. It establishes an organized foundation for bringing together the different components of the Azure Cloud Project.
+>>>>>>> central/main
