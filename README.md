@@ -40,13 +40,22 @@ This component covers the development and organization of the application's sour
 
 This component covers packaging the application and its dependencies into Docker images for consistent deployment.
 
-**Implementation details:** To be updated based on the containerization team's deliverables.
+**Implementation details:**
+- Every student portfolio folder includes an isolated multi-stage `Dockerfile` and `.dockerignore`.
+- Centralized Nginx reverse proxy routing requests via subdomains (`http://<student-name>.localhost:8080/`) with embedded DNS failover.
+- Root [docker-compose.yml](file:///d:/Govind/azure-cloud-portfolio-project/docker-compose.yml) for local and Azure VM orchestration.
+- Automated provisioning script ([scripts/generate_docker_setup.py](file:///d:/Govind/azure-cloud-portfolio-project/scripts/generate_docker_setup.py)) for new portfolio onboarding.
+- Detailed architecture and usage documented in [CONTAINER_AND_CI_GUIDE.md](file:///d:/Govind/azure-cloud-portfolio-project/CONTAINER_AND_CI_GUIDE.md).
 
 ### 3.5 CI/CD Pipeline
 
 This component covers the automation of build, validation, testing and deployment activities using the project's configured CI/CD workflows.
 
-**Implementation details:** Document the actual GitHub Actions workflows and deployment configuration available in the repository.
+**Implementation details:**
+- Centralized GitHub Actions workflow at [.github/workflows/docker-ci.yml](file:///d:/Govind/azure-cloud-portfolio-project/.github/workflows/docker-ci.yml).
+- **Selective Matrix Building:** Detects changed portfolios using `git diff` and only builds containers for modified folders.
+- **PR Gating:** Validates Docker image builds without publishing on Pull Requests.
+- **Automated Publishing:** Automatically tags and pushes production container images to GitHub Container Registry (`ghcr.io`) upon merging to `main`.
 
 ### 3.6 GitHub Repository and Portfolio Management
 

@@ -1,0 +1,204 @@
+# Root Docker Compose for Azure Cloud Portfolio Project
+# Enables local & Azure VM orchestration with an automated Nginx reverse proxy
+
+version: '3.8'
+
+services:
+  # Central Reverse Proxy & Landing Dashboard
+  proxy:
+    build:
+      context: ./proxy
+    container_name: portfolio-proxy
+    ports:
+      - "80:80"
+      - "8080:80"
+    restart: unless-stopped
+    depends_on:
+      - sakshi-portfolio
+    networks:
+      - portfolio-network
+
+  # ── Vite / React Portfolios ─────────────────────────────
+  sakshi-portfolio:
+    build:
+      context: ./portfolio-Sakshi
+      dockerfile: Dockerfile
+    container_name: portfolio-sakshi
+    ports:
+      - "8021:80"
+    restart: unless-stopped
+    networks:
+      - portfolio-network
+
+  anshumaan-portfolio:
+    build:
+      context: ./AnshumaanKhare-portfolio
+      dockerfile: Dockerfile
+    container_name: portfolio-anshumaankhare
+    ports:
+      - "8001:80"
+    restart: unless-stopped
+    networks:
+      - portfolio-network
+
+  adrish-portfolio:
+    build:
+      context: ./portfolio-adrish-chowdhury
+      dockerfile: Dockerfile
+    container_name: portfolio-adrish-chowdhury
+    ports:
+      - "8005:80"
+    restart: unless-stopped
+    networks:
+      - portfolio-network
+
+  kalyani-portfolio:
+    build:
+      context: ./portfolio-kalyani
+      dockerfile: Dockerfile
+    container_name: portfolio-kalyani
+    ports:
+      - "8013:80"
+    restart: unless-stopped
+    networks:
+      - portfolio-network
+
+  kartikaa-portfolio:
+    build:
+      context: ./portfolio-kartikaa
+      dockerfile: Dockerfile
+    container_name: portfolio-kartikaa
+    ports:
+      - "8014:80"
+    restart: unless-stopped
+    networks:
+      - portfolio-network
+
+  megha-portfolio:
+    build:
+      context: ./portfolio-megha
+      dockerfile: Dockerfile
+    container_name: portfolio-megha
+    ports:
+      - "8016:80"
+    restart: unless-stopped
+    networks:
+      - portfolio-network
+
+  # ── Python / Flask Portfolio ────────────────────────────
+  smrithi-portfolio:
+    build:
+      context: ./portfolio-smrithi
+      dockerfile: Dockerfile
+    container_name: portfolio-smrithi
+    ports:
+      - "8024:5000"
+    restart: unless-stopped
+    networks:
+      - portfolio-network
+
+  # ── Express / Node Backends ─────────────────────────────
+  rohit-portfolio:
+    build:
+      context: ./portfolio-rohit
+      dockerfile: Dockerfile
+    container_name: portfolio-rohit
+    ports:
+      - "8019:8080"
+    restart: unless-stopped
+    networks:
+      - portfolio-network
+
+  simran-portfolio:
+    build:
+      context: ./portfolio-simran
+      dockerfile: Dockerfile
+    container_name: portfolio-simran
+    ports:
+      - "8023:3000"
+    restart: unless-stopped
+    networks:
+      - portfolio-network
+
+  # ── Next.js Portfolios ──────────────────────────────────
+  govind-madhav-portfolio:
+    build:
+      context: ./portfolio-govind-madhav
+      dockerfile: Dockerfile
+    container_name: portfolio-govind-madhav
+    ports:
+      - "8010:3000"
+    restart: unless-stopped
+    networks:
+      - portfolio-network
+
+  utkarsh-portfolio:
+    build:
+      context: ./portfolio-utkarsh
+      dockerfile: Dockerfile
+    container_name: portfolio-utkarsh
+    ports:
+      - "8027:80"
+    restart: unless-stopped
+    networks:
+      - portfolio-network
+
+  # ── Static HTML Portfolios ──────────────────────────────
+  abel-shon-portfolio:
+    build:
+      context: ./portfolio-abel-shon
+      dockerfile: Dockerfile
+    container_name: portfolio-abel-shon
+    ports:
+      - "8002:80"
+    restart: unless-stopped
+    networks:
+      - portfolio-network
+
+  devyansh-portfolio:
+    build:
+      context: ./portfolio-devyansh
+      dockerfile: Dockerfile
+    container_name: portfolio-devyansh
+    ports:
+      - "8007:80"
+    restart: unless-stopped
+    networks:
+      - portfolio-network
+
+  prem-portfolio:
+    build:
+      context: ./portfolio-prem
+      dockerfile: Dockerfile
+    container_name: portfolio-prem
+    ports:
+      - "8018:80"
+    restart: unless-stopped
+    networks:
+      - portfolio-network
+
+  surya-portfolio:
+    build:
+      context: ./portfolio-Surya
+      dockerfile: Dockerfile
+    container_name: portfolio-surya
+    ports:
+      - "8026:80"
+    restart: unless-stopped
+    networks:
+      - portfolio-network
+
+  sourav-portfolio:
+    build:
+      context: ./portfolio-Sourav
+      dockerfile: Dockerfile
+    container_name: portfolio-sourav
+    ports:
+      - "8025:80"
+    restart: unless-stopped
+    networks:
+      - portfolio-network
+
+networks:
+  portfolio-network:
+    driver: bridge

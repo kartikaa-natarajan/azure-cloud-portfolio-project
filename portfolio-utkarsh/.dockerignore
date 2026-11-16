@@ -1,6 +1,8 @@
 node_modules
 .next
+out
 .git
-.vscode
-site.zip
+.github
+Dockerfile
+.dockerignore
 *.log
