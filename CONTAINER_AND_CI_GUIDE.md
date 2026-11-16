@@ -46,7 +46,7 @@ Each portfolio lives in its own subdirectory and is isolated at two critical sta
 * Every portfolio folder contains its own self-contained `Dockerfile` and `.dockerignore`.
 * When Docker builds an image, the build context is scoped strictly to that student's folder:
   ```bash
-  docker build -t portfolio-sakshi:latest ./portfolio-Sakshi
+  docker build -t portfolio-govind-madhav:latest ./portfolio-govind-madhav
   ```
 * Docker only accesses files within that folder. Dependencies, node_modules, and configuration files never leak or conflict across portfolios.
 
@@ -148,7 +148,7 @@ The workflow file is located at **`.github/workflows/docker-ci.yml`**.
    - Pushes the image to GHCR.
 3. **Manual Trigger (`workflow_dispatch`)**:
    - You can trigger builds manually from the GitHub Actions tab.
-   - Input option allows building a specific portfolio (e.g. `portfolio-Sakshi`) or `all`.
+   - Input option allows building a specific portfolio (e.g. `portfolio-govind-madhav`) or `all`.
 
 ---
 
@@ -160,9 +160,9 @@ The project includes an intelligent **Nginx Reverse Proxy & Dashboard** ([proxy/
 
 | Environment | Example URL | Notes |
 | :--- | :--- | :--- |
-| **Localhost** | `http://sakshi.localhost:8080/` | `*.localhost` automatically resolves to `127.0.0.1` in all modern browsers. |
-| **VM with Public IP** | `http://sakshi.<VM-IP>.nip.io:8080/` | Uses `nip.io` wildcard DNS (zero setup needed). |
-| **Custom Domain** | `http://sakshi.yourdomain.com/` | Add wildcard DNS `*.yourdomain.com -> <VM IP>`. |
+| **Localhost** | `http://govind-madhav.localhost:8080/` | `*.localhost` automatically resolves to `127.0.0.1` in all modern browsers. |
+| **VM with Public IP** | `http://govind-madhav.<VM-IP>.nip.io:8080/` | Uses `nip.io` wildcard DNS (zero setup needed). |
+| **Custom Domain** | `http://govind-madhav.yourdomain.com/` | Add wildcard DNS `*.yourdomain.com -> <VM IP>`. |
 | **Landing Dashboard** | `http://localhost:8080/` | Visual search dashboard listing all 28 portfolios. |
 
 ---
@@ -170,8 +170,8 @@ The project includes an intelligent **Nginx Reverse Proxy & Dashboard** ([proxy/
 ### Commands:
 
 ```bash
-# Start the proxy and Sakshi's portfolio:
-docker compose up -d proxy sakshi-portfolio
+# Start the proxy and Govind's reference portfolio:
+docker compose up -d proxy govind-madhav-portfolio
 
 # Start all portfolios and the proxy:
 docker compose up -d
