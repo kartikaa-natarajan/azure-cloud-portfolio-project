@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Azure Cloud Portfolios Hub</title>
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: #0b0f19;
+    --card: #151b28;
+    --line: #242d40;
+    --fg: #e6edf3;
+    --mut: #8b949e;
+    --acc: #58a6ff;
+    --acc-hover: #1f6feb;
+    --badge-bg: #1c2638;
+    --badge-fg: #79c0ff;
+  }
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg: #f6f8fa;
+      --card: #ffffff;
+      --line: #d0d7de;
+      --fg: #1f2328;
+      --mut: #656d76;
+      --acc: #0969da;
+      --acc-hover: #0550ae;
+      --badge-bg: #ddf4ff;
+      --badge-fg: #0969da;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  }
+  main {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 56px 24px 80px;
+  }
+  .header {
+    margin-bottom: 32px;
+  }
+  h1 {
+    margin: 0 0 8px;
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    letter-spacing: -0.02em;
+  }
+  p.sub {
+    margin: 0 0 24px;
+    color: var(--mut);
+    font-size: 1.05rem;
+  }
+  .search-bar {
+    width: 100%;
+    max-width: 440px;
+    padding: 12px 16px;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: var(--card);
+    color: var(--fg);
+    font: inherit;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .search-bar:focus {
+    border-color: var(--acc);
+    box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.15);
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 14px;
+    margin-top: 24px;
+  }
+  a.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 18px 20px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--card);
+    color: inherit;
+    text-decoration: none;
+    transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
+  }
+  a.card:hover, a.card:focus-visible {
+    border-color: var(--acc);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    outline: none;
+  }
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .n {
+    font-weight: 600;
+    font-size: 1.05rem;
+  }
+  .tag {
+    font-size: 0.72rem;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 12px;
+    background: var(--badge-bg);
+    color: var(--badge-fg);
+  }
+  .u {
+    color: var(--mut);
+    font-size: 0.84rem;
+    word-break: break-all;
+  }
+  .empty {
+    color: var(--mut);
+    margin-top: 32px;
+    display: none;
+    font-size: 1.1rem;
+  }
+</style>
+</head>
+<body>
+<main>
+  <div class="header">
+    <h1>☁️ Azure Cloud Portfolios Hub</h1>
+    <p class="sub">Discover and browse all <span id="count"></span> student cloud portfolios, each running in its own isolated container.</p>
+    <input id="q" class="search-bar" type="search" placeholder="Search by student name or technology..." autocomplete="off" autofocus>
+  </div>
+  <div class="grid" id="grid"></div>
+  <p class="empty" id="empty">No portfolios match your search.</p>
+</main>
+<script>
+const SITES = [
+  ["abel-shon", "Abel Shon", "Static HTML"],
+  ["abhishek-kumar", "Abhishek Kumar", "Static HTML"],
+  ["adithya-tej-bm", "Adithya Tej BM", "Static HTML"],
+  ["adrish-chowdhury", "Adrish Chowdhury", "Vite / React"],
+  ["anshumaankhare", "Anshumaan Khare", "Vite / React"],
+  ["anusha", "Anusha", "Static HTML"],
+  ["devyansh", "Devyansh", "Static HTML"],
+  ["dhruvi-bagga", "Dhruvi Bagga", "Vite / React"],
+  ["gayathri", "Gayathri", "Next.js"],
+  ["govind-madhav", "Govind Madhav", "Next.js"],
+  ["hemanth-raj", "Hemanth Raj", "Vite + Node"],
+  ["jeeva", "Jeeva", "Static HTML"],
+  ["kalyani", "Kalyani", "Vite / React"],
+  ["kartikaa", "Kartikaa", "Vite / React"],
+  ["manish-yadav", "Manish Yadav", "Static HTML"],
+  ["megha", "Megha", "Vite / React"],
+  ["prajwal", "Prajwal", "Static HTML"],
+  ["prem", "Prem", "Static HTML"],
+  ["rohit", "Rohit", "Express.js"],
+  ["rubika", "Rubika", "Static HTML"],
+  ["sakshi", "Sakshi", "Vite / React"],
+  ["shivam", "Shivam", "Static HTML"],
+  ["simran", "Simran", "Express.js"],
+  ["smrithi", "Smrithi", "Python / Flask"],
+  ["sourav", "Sourav", "Static HTML"],
+  ["surya", "Surya", "Static HTML"],
+  ["utkarsh", "Utkarsh", "Next.js"],
+  ["vinod", "Vinod", "Next.js"]
+];
+
+const host = location.hostname;
+const port = location.port ? ':' + location.port : '';
+const base = /^\d+\.\d+\.\d+\.\d+$/.test(host) ? host + '.nip.io' : host;
+const urlFor = s => location.protocol + '//' + s + '.' + base + port + '/';
+
+const grid = document.getElementById('grid');
+grid.innerHTML = SITES.map(([s, n, t]) => `
+  <a class="card" data-search="${n.toLowerCase()} ${s} ${t.toLowerCase()}" href="${urlFor(s)}">
+    <div class="card-top">
+      <div class="n">${n}</div>
+      <div class="tag">${t}</div>
+    </div>
+    <div class="u">${urlFor(s).replace(/^https?:\/\//,'')}</div>
+  </a>
+`).join('');
+
+document.getElementById('count').textContent = SITES.length;
+
+const q = document.getElementById('q');
+const empty = document.getElementById('empty');
+q.addEventListener('input', () => {
+  const v = q.value.trim().toLowerCase();
+  let shown = 0;
+  grid.querySelectorAll('a').forEach(a => {
+    const ok = !v || a.dataset.search.includes(v);
+    a.style.display = ok ? '' : 'none';
+    if (ok) shown++;
+  });
+  empty.style.display = shown ? 'none' : 'block';
+});
+</script>
+</body>
+</html>

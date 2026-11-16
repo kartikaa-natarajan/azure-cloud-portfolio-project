@@ -152,36 +152,61 @@ The workflow file is located at **`.github/workflows/docker-ci.yml`**.
 
 ---
 
-## 5. Running Portfolios with Docker Compose
+## 5. Running Portfolios with Docker Compose & Reverse Proxy
 
-To run portfolios locally or on an Azure Virtual Machine:
+The project includes an intelligent **Nginx Reverse Proxy & Dashboard** ([proxy/](file:///d:/Govind/azure-cloud-portfolio-project/proxy)) that routes requests by subdomain and provides a central landing page.
 
-### Run a specific portfolio:
+### How URLs Work:
+
+| Environment | Example URL | Notes |
+| :--- | :--- | :--- |
+| **Localhost** | `http://sakshi.localhost:8080/` | `*.localhost` automatically resolves to `127.0.0.1` in all modern browsers. |
+| **VM with Public IP** | `http://sakshi.<VM-IP>.nip.io:8080/` | Uses `nip.io` wildcard DNS (zero setup needed). |
+| **Custom Domain** | `http://sakshi.yourdomain.com/` | Add wildcard DNS `*.yourdomain.com -> <VM IP>`. |
+| **Landing Dashboard** | `http://localhost:8080/` | Visual search dashboard listing all 28 portfolios. |
+
+---
+
+### Commands:
+
 ```bash
-# Start Sakshi's portfolio on port 8021
-docker compose up -d sakshi-portfolio
+# Start the proxy and Sakshi's portfolio:
+docker compose up -d proxy sakshi-portfolio
 
-# Start Smrithi's Flask portfolio on port 8024
-docker compose up -d smrithi-portfolio
-```
-
-### Run all portfolios:
-```bash
+# Start all portfolios and the proxy:
 docker compose up -d
-```
 
-### Stop containers:
-```bash
+# Check running status:
+docker compose ps
+
+# Stop containers:
 docker compose down
 ```
 
 ---
 
-## 6. Guide for Future Contributors / Students
+## 6. Automated Portfolio Provisioning Script
+
+Whenever a new student adds their portfolio to the repository, you don't have to manually configure Docker or update Nginx proxy files. Run the turnkey automation script:
+
+```bash
+python scripts/generate_docker_setup.py
+```
+
+### What the Script Automatically Does:
+1. **Scans the repository** for any new portfolio directories.
+2. **Inspects the tech stack** (`package.json`, Vite, Next.js, Express, Flask `requirements.txt`, or Static HTML).
+3. **Generates the Dockerfile & `.dockerignore`** matching that specific stack (if not already present).
+4. **Updates `proxy/nginx.conf`** with the new subdomain upstream routing.
+5. **Updates `proxy/index.html`** with the new student's card, formatted name, and tech stack badge.
+
+---
+
+## 7. Guide for Future Contributors / Students
 
 When a new student adds their portfolio:
 1. Create a folder `portfolio-<your-name>/`.
 2. Add your application files inside.
-3. Add a `Dockerfile` and `.dockerignore` based on the templates in Section 3.
+3. Either run `python scripts/generate_docker_setup.py` or let the automated platform CI detect it.
 4. Submit your Pull Request targeting `main`.
 5. The platform CI will automatically detect your folder, test your Docker build, and report the status check on your PR.
