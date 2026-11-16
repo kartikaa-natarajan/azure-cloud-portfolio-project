@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-# Portfolio_SaiSiddartha.
-=======
 # Azure Cloud Project
 
 ## 1. Project Overview
